@@ -1,0 +1,23 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Fyyur | Albums{% endblock %}
+{% block content %}
+    <div id="toast-box"></div>
+    {% for album in albums %}
+        {% if album.artist_albums | length != 0 %}
+            <h4>Artist: {{ album.artist_name }}</h4>
+            <ul class="items">
+            {% for album in album.artist_albums %}
+                <li>
+                    <a href="/album/{{ album.album_id }}">
+                        <i class="fas fa-music"></i>
+                        <div class="item">
+                            <h5>{{ album.album_name }}</h5>
+                        </div>
+                    </a>
+                </li>
+
+            {% endfor %}
+        {% endif %}
+    </ul>
+    {% endfor %}
+{% endblock %}

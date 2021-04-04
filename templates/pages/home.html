@@ -1,25 +1,89 @@
 {% extends 'layouts/main.html' %}
 {% block title %}Fyyur{% endblock %}
 {% block content %}
-<div class="row">
-	<div class="col-sm-6">
-		<h1>Fyyur 🔥</h1>
-		<p class="lead">Where musical artists meet musical venues.</p>
-		<h3>
-			<a href="/venues"><button class="btn btn-primary btn-lg">Find a venue</button></a>
-			<a href="/venues/create"><button class="btn btn-default btn-lg">Post a venue</button></a>
-		</h3>
-		<h3>
-			<a href="/artists"><button class="btn btn-primary btn-lg">Find an artist</button></a>
-			<a href="/artists/create"><button class="btn btn-default btn-lg">Post an artist</button></a>
-		</h3>
-		<p class="lead">Publicize about your show for free.</p>
-		<h3>
-			<a href="/shows/create"><button class="btn btn-default btn-lg">Post a show</button></a>
-		</h3>
-	</div>
-	<div class="col-sm-6 hidden-sm hidden-xs">
-		<img id="front-splash" src="{{ url_for('static',filename='img/front-splash.jpg') }}" alt="Front Photo of Musical Band" />
-	</div>
-</div>
+    <div class="row">
+        <div class="col-sm-6">
+            <h1>Fyyur 🔥</h1>
+            <p class="lead">Where musical artists meet musical venues.</p>
+            <h3>
+                <a href="/venues">
+                    <button class="btn btn-primary btn-lg">Find a venue</button>
+                </a>
+                <a href="/venues/create">
+                    <button class="btn btn-default btn-lg">Post a venue</button>
+                </a>
+            </h3>
+            <h3>
+                <a href="/artists">
+                    <button class="btn btn-primary btn-lg">Find an artist</button>
+                </a>
+                <a href="/artists/create">
+                    <button class="btn btn-default btn-lg">Post an artist</button>
+                </a>
+            </h3>
+            <p class="lead">Publicize about your show or album for free.</p>
+            <h3>
+                <a href="/shows/create">
+                    <button class="btn btn-default btn-lg">Post a show</button>
+                </a>
+                <a href="/album/create">
+                    <button class="btn btn-default btn-lg">Post an Album</button>
+                </a>
+            </h3>
+        </div>
+        <div class="col-sm-6 hidden-sm hidden-xs">
+            <img id="front-splash" src="{{ url_for('static',filename='img/front-splash.jpg') }}"
+                 alt="Front Photo of Musical Band"/>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h5>Latest listed Venues:</h5>
+            <br>
+            {% if recent_venues | length > 0 %}
+                {% for venue in recent_venues %}
+                    <div class="col-sm-{{ col_size }}">
+                        <div class="main-tile main-tile-show">
+                            <h5><a href="/venues/{{ venue.id }}">{{ venue.name }}</a></h5>
+                            <h6>Listed on: {{ venue.listed_on|datetime('full') }}</h6>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-sm-12">
+                    <h5 class="main-empty-venues">There are no recently listed Venues... ! <i class="fas fa-moon"></i>
+                    </h5>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h5>Latest listed Venues:</h5>
+            <br>
+            {% if recent_artists | length > 0 %}
+                {% for artist in recent_artists %}
+                    <div class="col-sm-{{ col_size }}">
+                        <div class="main-tile main-tile-show">
+                            <h5><a href="/artists/{{ artist.id }}">{{ artist.name }}</a></h5>
+                            <h6>Listed on: {{ artist.listed_on|datetime('full') }}</h6>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-sm-12}">
+                    <h4 class="main-empty-artists">There are no recently listed Artists... ! <i class="fas fa-moon"></i>
+                    </h4>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+
 {% endblock %}

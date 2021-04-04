@@ -1,0 +1,54 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Edit Album{% endblock %}
+{% block content %}
+    <div class="form-wrapper">
+        <div id="toast-box"></div>
+        <form class="form" method="post" action="/album/{{ album.id }}/edit">
+            <h3 class="form-heading">Edit Album <em id="album_name">{{ album.name }}</em> <a
+                    href="{{ url_for('index') }}"
+                    title="Back to homepage"><i
+                    class="fa fa-home pull-right"></i></a></h3>
+            <div class="form-group">
+                <label for="album_name">Name</label>
+                {{ form.album_name(class_ = 'form-control', autofocus = true) }}
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <div class="form-inline">
+                    <div class="form-group">
+                        {{ form.album_description(class_ = 'form-control', placeholder='Album Description', autofocus = true) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="album_launch_date">Launch Date</label>
+                {{ form.album_launch_date(class_ = 'form-control', autofocus = true) }}
+            </div>
+            <div class="form-group">
+                <label for="artist">Artist</label>
+                {{ form.artist(class_ = 'form-control', autofocus = false) }}
+            </div>
+            <div class="form-group">
+                <label for="songs">Songs</label>
+                <ul class="items">
+                    {% for song in album.songs %}
+                        <li id="{{ song.id }}">
+                            <a data-id="{{ song.id }}" class="deleteBtn">&cross;</a>
+                            <i class="fas fa-music"></i>
+                            <div class="item">
+                                <h5>{{ song.name }} - {{ song.duration }}</h5>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div id="message"></div>
+            </div>
+            <input type="submit" value="Edit Album" class="btn btn-primary btn-lg btn-block">
+        </form>
+    </div>
+{% endblock %}
+
+{% block body_scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/songs.js') }}"></script>
+{% endblock body_scripts %}

@@ -1,0 +1,32 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Album Search{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6">
+            <h4>
+                Album Name
+            </h4>
+            <p class="monospace subtitle">{{ album.name }}</p>
+            <div class="songs">
+                <h5>Tracks</h5>
+                <ul>
+                    {% for song in album.songs %}
+                        <li class="songs">
+                            <span class="songs">{{ song.name }} {{ song.duration }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <a href="/album/{{ album.id }}/edit">
+        <button class="btn btn-primary btn-lg">Edit</button>
+    </a>
+    <a href="/song/create/{{ album.id }}">
+        <button class="btn btn-primary btn-lg">Add Song</button>
+    </a>
+
+
+{% endblock %}
+
