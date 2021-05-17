@@ -31,6 +31,7 @@ moment = Moment(app)
 app.config.from_object('config')
 
 db = SQLAlchemy(app)
+db.create_all()
 migrate = Migrate(app=app, db=db)
 
 
@@ -360,13 +361,6 @@ def search_venues():
 def show_venue(venue_id):
     venue = Venue.query.filter_by(id=venue_id).first()
     shows = Shows.query.filter_by(venue_id=venue.id).all()
-
-    queries = db.session.query(
-        Artist, Shows, Venue
-    ).filter(
-        Venue.id == venue_id,
-        Shows.venue_id == venue_id
-    ).all()
 
     u_shows = []
     p_shows = []
@@ -707,7 +701,6 @@ def create_show_submission():
             show = Shows(artist_id=artist.id,
                          venue_id=form_data['venue_id'],
                          start_time=form_data['start_time'])
-            print(show)
             db.session.add(show)
             db.session.commit()
             flash('A new Show has been successfully listed!')
